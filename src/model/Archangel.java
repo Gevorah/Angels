@@ -1,21 +1,22 @@
 public class Archangel{
+	
 	private String name;
 	private String prayer;
 	private String power;
 	
 	public Archangel(String name, String prayer, String power){
-		this.nombre=name;
-		this.prayer=prayer;
-		this.power=power;
+		this.nombre = name;
+		this.prayer = prayer;
+		this.power = power;
 	}
 	
-	getName(){
+	public String getName(){
 		return name;
 	}
-	getPrayer(){
+	public String getPrayer(){
 		return prayer;
 	}
-	getPower(){
+	public String getPower(){
 		return power;
 	}
 }
