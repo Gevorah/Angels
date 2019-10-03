@@ -26,4 +26,17 @@ public class Candle{
 	public double getIlluminance(){
 		return illuminance;
 	}
+	
+	public void setColor(String color){
+		this.color = color;
+	}
+	public void setSize(double size){
+		this.size = size;
+	}
+	public void setEssence(String essence){
+		this.essence = essence;
+	}
+	public void setIlluminance(double illuminance){
+		this.illuminance = illuminance;
+	}
 }
