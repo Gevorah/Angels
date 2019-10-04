@@ -6,13 +6,13 @@ public class Legion{
 	public static final String SERAFIN = "Seraphim";
 	public static final String LIBERI = "Liberi";
 	
+	@SuppressWarnings("unused")
 	private String legion;
 	private int index;
 	private ArrayList<Angel> listOfAngels;
-	private Angel angel;
 	
 	public Legion(){
-		legion = TOP;
+		legion = Legion.TOP;
 		index = 2;
 		listOfAngels = new ArrayList<Angel>();
 		listOfAngels.add(0, new Angel("Saitamael","Ooneee Puuunch",8,"October","One Punch"));
@@ -21,7 +21,7 @@ public class Legion{
 		listOfAngels.get(1).setCandle("@@@",1,"@@@",-1);
 	}
 	
-	public void addAngels(String name, String prayer, int day, String month, String skill, String color, double size, String essence, double illuminance){
+	public void addAngel(String name, String prayer, int day, String month, String skill, String color, double size, String essence, double illuminance){
 		listOfAngels.add(index, new Angel(name,prayer,day,month,skill));
 		listOfAngels.get(index).setCandle(color,size,essence,illuminance);
 		index++;
@@ -33,7 +33,7 @@ public class Legion{
 			for(int i=0;i<listOfAngels.size();i++){
 				if(listOfAngels.get(i).getName().equalsIgnoreCase(search)){
 					show = String.format("Name: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
-					"Candle -> Color: %s%n"+"Size: %10s%n"+"Essence: %10s%n"+"Illuminance: %10s%n",
+					"Skill: %s%n"+"Candle %n"+"Color: %s%n"+"Size: %s%n"+"Essence: %s%n"+"Illuminance: %s%n",
 					listOfAngels.get(i).getName(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
 					listOfAngels.get(i).getMonth(), listOfAngels.get(i).getSkill(), listOfAngels.get(i).getCandle().getColor(),
 					listOfAngels.get(i).getCandle().getSize(), listOfAngels.get(i).getCandle().getEssence(), listOfAngels.get(i).getCandle().getIlluminance());
@@ -43,7 +43,7 @@ public class Legion{
 			for(int i=0;i<listOfAngels.size();i++){
 				if(listOfAngels.get(i).getSkill().equalsIgnoreCase(search)){
 					show = String.format("Name: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
-					"Candle -> Color: %s%n"+"Size: %10s%n"+"Essence: %10s%n"+"Illuminance: %10s%n",
+					"Skill: %s%n"+"Candle %n"+"Color: %s%n"+"Size: %s%n"+"Essence: %s%n"+"Illuminance: %s%n",
 					listOfAngels.get(i).getName(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
 					listOfAngels.get(i).getMonth(), listOfAngels.get(i).getSkill(), listOfAngels.get(i).getCandle().getColor(),
 					listOfAngels.get(i).getCandle().getSize(), listOfAngels.get(i).getCandle().getEssence(), listOfAngels.get(i).getCandle().getIlluminance());
@@ -53,45 +53,42 @@ public class Legion{
 		return show;
 	}
 	
-	public String showAllAngels(){
-		String show = "";
-		for(int i=0;i<listOfAngels.size();i++){
-			show += String.format("Name: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
-			"Candle -> Color: %s%n"+"Size: %10s%n"+"Essence: %10s%n"+"Illuminance: %10s%n%n",
-			listOfAngels.get(i).getName(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
-			listOfAngels.get(i).getMonth(), listOfAngels.get(i).getSkill(), listOfAngels.get(i).getCandle().getColor(),
-			listOfAngels.get(i).getCandle().getSize(), listOfAngels.get(i).getCandle().getEssence(), listOfAngels.get(i).getCandle().getIlluminance());
-		}
-		return show;
-	}
-	
 	public boolean checkName(String name){
-		boolean exists = false;
+		boolean correct = true;
 		int i = 0;
-		while(i<listOfAngels.size() && exists==false){
-			if(listOfAngels.get(i).getName().equalsIgnoreCase(name)){
-				exists = true;
-			}else{
+		if(name.endsWith("el")==true) {
+			while(i<listOfAngels.size() && correct==true){
+				if(listOfAngels.get(i).getName().equalsIgnoreCase(name)){
+					correct = false;
+				}else {
+					correct = true;
+				}
+			}
+			if(correct=false){
 				System.out.println("The Name Already Exist.");
 			}
+		}else {
+			System.out.println("The Name has an Incorrect Finish.");
+			correct = false;
 		}
-		return exists;
+		return correct;
 	}
 	
 	public boolean checkSkill(String skill){
 		boolean exists = false;
 		int i = 0;
 		while(i<listOfAngels.size() && exists==false){
-			if(listOfAngels.get(i).getName().equalsIgnoreCase(skill)){
+			if(listOfAngels.get(i).getSkill().equalsIgnoreCase(skill)){
 				exists = true;
-			}else{
-				System.out.println("The Skill Already Exist.");
 			}
+		}
+		if(exists==true){
+			System.out.println("The Skill Already Exist.");
 		}
 		return exists;
 	}
 	
-	public int angelsindex(){
+	public int getSize(){
 		return listOfAngels.size();
 	}
 	
@@ -99,7 +96,7 @@ public class Legion{
 		String show = "";
 		for(int i=0;i<listOfAngels.size();i++){
 			if(listOfAngels.get(i).getMonth()==month){
-				show += String.format("Name: %s%n"+"Day: %d%n"+"Candle Color: %s%n"+"Candle Essence: %s%n", listOfAngels.get(i).getName(), 
+				show += String.format("Name: %s%n"+"Day: %d%n"+"Candle Color: %s%n"+"Candle Essence: %s%n%n", listOfAngels.get(i).getName(), 
 				listOfAngels.get(i).getDay(), listOfAngels.get(i).getCandle().getColor(), listOfAngels.get(i).getCandle().getEssence());
 			}
 		}
@@ -109,7 +106,7 @@ public class Legion{
 	public String showAllCelebrations(){
 		String show = "";
 		for(int i=0;i<listOfAngels.size();i++){
-			show = String.format("%s:"+"%d"+"%s", listOfAngels.get(i).getName(), listOfAngels.get(i).getDay(), listOfAngels.get(i).getMonth());
+			show += String.format("%s: "+"%d "+"%s%n", listOfAngels.get(i).getName(), listOfAngels.get(i).getDay(), listOfAngels.get(i).getMonth());
 		}
 		return show;
 	}
