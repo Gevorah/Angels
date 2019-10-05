@@ -5,26 +5,24 @@ public class Legion{
 	public static final String TOP = "Top Maximun";
 	public static final String SERAFIN = "Seraphim";
 	public static final String LIBERI = "Liberi";
-	
-	@SuppressWarnings("unused")
+
 	private String legion;
 	private int index;
 	private ArrayList<Angel> listOfAngels;
 	
-	public Legion(){
-		legion = Legion.TOP;
-		index = 2;
+	public Legion(String legion, int index){
+		this.legion = legion;
+		this.index = index;
 		listOfAngels = new ArrayList<Angel>();
-		listOfAngels.add(0, new Angel("Saitamael","Ooneee Puuunch",8,"October","One Punch"));
-		listOfAngels.get(0).setCandle("Red",99,"Mint",999);
-		listOfAngels.add(1, new Angel("Anuel","Real until the dead",10,"July","The Most Useless"));
-		listOfAngels.get(1).setCandle("@@@",1,"@@@",-1);
 	}
 	
 	public void addAngel(String name, String prayer, int day, String month, String skill, String color, double size, String essence, double illuminance){
 		listOfAngels.add(index, new Angel(name,prayer,day,month,skill));
 		listOfAngels.get(index).setCandle(color,size,essence,illuminance);
 		index++;
+		if(index>2) {
+			System.out.println("\n"+"The angel has been created. \n\n");
+		}
 	}
 	
 	public String searchAngel(int index, String search){
@@ -56,16 +54,14 @@ public class Legion{
 	public boolean checkName(String name){
 		boolean correct = true;
 		int i = 0;
-		if(name.endsWith("el")==true) {
+		if(name.endsWith("el")==true){
 			while(i<listOfAngels.size() && correct==true){
 				if(listOfAngels.get(i).getName().equalsIgnoreCase(name)){
 					correct = false;
-				}else {
-					correct = true;
+					System.out.println("The Name Already Exist.");
+				}else{
+					i++;
 				}
-			}
-			if(correct=false){
-				System.out.println("The Name Already Exist.");
 			}
 		}else {
 			System.out.println("The Name has an Incorrect Finish.");
@@ -80,10 +76,10 @@ public class Legion{
 		while(i<listOfAngels.size() && exists==false){
 			if(listOfAngels.get(i).getSkill().equalsIgnoreCase(skill)){
 				exists = true;
+				System.out.println("The Skill Already Exist.");
+			}else{
+				i++;
 			}
-		}
-		if(exists==true){
-			System.out.println("The Skill Already Exist.");
 		}
 		return exists;
 	}
@@ -100,6 +96,9 @@ public class Legion{
 				listOfAngels.get(i).getDay(), listOfAngels.get(i).getCandle().getColor(), listOfAngels.get(i).getCandle().getEssence());
 			}
 		}
+		if(show.equalsIgnoreCase("")) {
+			show += "There are'nt angels in this month \n";
+		}
 		return show;
 	}
 	
@@ -111,6 +110,30 @@ public class Legion{
 		return show;
 	}
 	
+	public static boolean checkDay(String month, int day){
+		boolean correct = false;
+		if(month.equalsIgnoreCase(Angel.FEBRUARY)){
+			if(day>0 && day<30){
+				correct = true;
+			}
+		}else if(month.equalsIgnoreCase(Angel.JANUARY) || month.equalsIgnoreCase(Angel.MARCH) || month.equalsIgnoreCase(Angel.MAY) ||
+		month.equalsIgnoreCase(Angel.JULY) || month.equalsIgnoreCase(Angel.AUGUST) || month.equalsIgnoreCase(Angel.OCTOBER) ||
+		month.equalsIgnoreCase(Angel.DECEMBER)){
+			if(day>0 && day<=31){
+				correct = true;
+			}
+		}else{
+			if(day>0 && day<31){
+				correct = true;
+			}
+		}	
+		if(correct==false){
+			System.out.printf("Wrong Day for %s%n",month);
+		}
+		return correct;
+		
+	}
+	
 	public static boolean checkMonth(String month){
 		if(month.equalsIgnoreCase("1") || month.equalsIgnoreCase(Angel.JANUARY) || month.equalsIgnoreCase("2") || month.equalsIgnoreCase(Angel.FEBRUARY) ||
 		month.equalsIgnoreCase("3") || month.equalsIgnoreCase(Angel.MARCH) || month.equalsIgnoreCase("4") || month.equalsIgnoreCase(Angel.APRIL) ||
@@ -120,7 +143,7 @@ public class Legion{
 		month.equalsIgnoreCase("11") || month.equalsIgnoreCase(Angel.NOVEMBER) || month.equalsIgnoreCase("12") || month.equalsIgnoreCase(Angel.DECEMBER)){
 			return true;
 		}else{
-			System.out.println("The Month is Incorrect.");
+			System.out.println("Wrong Month.");
 		}
 		return false;
 	}
