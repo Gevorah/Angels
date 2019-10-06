@@ -2,21 +2,45 @@ package ui;
 import model.Legion;
 import java.util.Scanner;
 
+/**
+*	This class allows create a main and manage the inputs and outputs.
+*	@author Jhon Ijaji.
+*	@version 1.0
+*	@since 1.0
+*/
 public class Main{
 	
-	private Scanner readerLine;
-	private Scanner readerNum;
 	private Scanner reader;
 	private Legion legion;
 	
+	/**
+	*	Main constructor<br>
+	*	@throws IllegalArgumentException In the case of an invalid main.<br>
+	*/
 	public Main(){
 	    reader = new Scanner(System.in);
 	}
 	
+	/**
+	*	This method create a default legion and default angels into the legion.<br>
+	*	@throws IllegalArgumentException In the case of an invalid main.<br>
+	*/
 	public void init(){
-		legion = new Legion(Legion.TOP,0);
-	    legion.addAngel("Saitamael","c:","Ooneee Puuunch",8,"October","One Punch","Red",99,"Mint",999);
-        legion.addAngel("Anuel","c:","Bebecitaaa",10,"July","Real until the dead","@@@",1,"@@@",3);	    
+		legion = new Legion(Legion.ARCHANGELS);
+	    legion.addAngel("Miguel","https://bit.ly/337AIFa",
+		"Oh San Miguel arcángel. Tu que eres el guerrero predilecto de Dios. Te honramos, te veneramos, y te bendecimos."+
+		"Te pedimos humildemente que veles por nuestra protección. Que seas tu valiente guerrero delante de nosotros."+
+		"Para que ninguna potestad de maldad o peligro. Pueda levantarse en nuestro perjuicio. Así como te enfrentaste a sus enemigos."+
+		"Te ruego que te enfrentes con quienes procuran el mal de mi familia. Te ruego que traigas contigo las huestes celestiales"+
+		"Para que velen por mi hogar y familia en todo  momento. San Miguel arcángel, valiente guerrero de Dios"+
+		"Te pido humildemente, que intercedas por nosotros ante él. Para que halle gracia delante de nuestro rostro"+
+		"Y pueda guardarnos de todo mal y todo peligro. Gracias arcángel san Miguel, porque tú escuchas nuestra oración.",
+		29,"September",legion.setSkill("Protection"),"Blue",15,"Rosemary",100);
+        legion.addAngel("Rafael","https://bit.ly/2OnkfIH","(...) Oh gran asistente de Dios, tú que todo lo puedes hacer y a cualquier hombre puedes sanar."+
+		"Te pido que veles por mi salud, para no sufrir ningún tipo de enfermedad de gravedad."+
+		"Además, ruego por todos los enfermos quienes sufren de dolores e inquietudes."+ 
+		"Para ellos solicito curas apropiadas para que logren salir adelante. Amén.",
+		29,"September",legion.setSkill("Health"),"Green",15,"Pine tree",100);
 	}
 	
 	public static void main(String[] args){
@@ -65,6 +89,7 @@ public class Main{
 					do{
 						System.out.println("Skill: ");
 						skill = main.reader.nextLine();
+						skill = main.legion.setSkill(skill);
 						checkSkill = main.legion.checkSkill(skill);
 					}while(checkSkill==true);
 					System.out.println("\n"+"Input the Attributes of the Candle > \n"+"<>Color:");
@@ -147,7 +172,7 @@ public class Main{
 			}else if(menu==5) {
 				main.instructions();
 			}else if(menu==0){
-				System.out.println("\n"+"Bye, Thank's");
+				System.out.println("\n"+"Bye. Thank you for use this program");
 				exit = true;
 			}else{
 				System.out.println("\n"+"Invalid function. Please write the correct number of the function.");
@@ -155,19 +180,31 @@ public class Main{
 		}while(exit==false);
 	}
 	
+	
+	/**
+	*	This method is the menu of the program<br>
+	*/
 	public void menu(){
-		System.out.println("\n"+"Legion Top Maximum: \n"+
-		"<1>.Create an Angel \n"+
-		"<2>.Search an Angel \n"+
-		"<3>.Show All Celebrations in one Month \n"+
-		"<4>.Show All Celebrations in the Year \n"+
-		"<5>.Instructions \n"+
-		"<0>.Exit \n");
+		System.out.printf("%n"+"Angels %s%n"+"Legion: %s%n"+
+		"Number of Angels: %s%n"+
+		"<1>.Create an Angel %n"+
+		"<2>.Search an Angel %n"+
+		"<3>.Show All Celebrations in one Month %n"+
+		"<4>.Show All Celebrations in the Year %n"+
+		"<5>.Instructions %n"+
+		"<0>.Exit %n%n", 
+		legion.getAngelType(), legion.getName(), legion.createdAngels());
 	}
 	
+	/**
+	*	This method contains the instructions to use the program.<br>
+	*/
 	public void instructions(){
-		System.out.println("\n"+"Angels Instruction: \n"+">The month can be input in number or name. \n"+
-		">Just exists max 31 days for each month. \n"+">The name must be finish in <el> \n");
+		System.out.println("\n"+"Program Instructions: \n"+
+		">ome of the recognized skills are the <1>protection, <2>health, <3>abundance, <4>justice, <5>loyalty \n"+
+		"You can use the number for set the skill for one angel or create another skills"+
+		">The month can be input in number or name. \n"+
+		">The name must be finish in <el> \n"+">The illuminance must be measured in lux \n");
 	}
 
 }

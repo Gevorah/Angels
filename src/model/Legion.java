@@ -1,18 +1,40 @@
 package model;
 import java.util.*;
+
+/**
+*	This class allows create legions.
+*	@author Jhon Ijaji.
+*	@version 1.0
+*	@since 1.0
+*/
 public class Legion{
 	
+	public static final String ARCHANGELS = "Archangels";
+	public static final String CHERUB = "Cherub";
 	public static final String TOP = "Top Maximun";
-	public static final String SERAFIN = "Seraphim";
 	public static final String LIBERI = "Liberi";
+	public static final String SERAPHIM = "Seraphim";
 
-	private String legion;
+	private String angelType;
+	private String name;
 	private int index;
 	private ArrayList<Angel> listOfAngels;
 	
-	public Legion(String legion, int index){
-		this.legion = legion;
-		this.index = index;
+	/**
+	*	Legion constructor<br>
+	*	@param angelType This is the type of angel of the legion.
+	*	@throws IllegalArgumentException In the case of an invalid type of angel.<br>.
+	*/
+	public Legion(String angelType){
+		this.angelType = angelType;
+		if(angelType.equalsIgnoreCase(Legion.ARCHANGELS)){
+			name = Legion.TOP;
+		}else if(angelType.equalsIgnoreCase(Legion.CHERUB)){
+			name = Legion.LIBERI;
+		}else if(angelType.equalsIgnoreCase(Legion.SERAPHIM)){
+			name = Legion.SERAPHIM;
+		}
+		this.index = 0;
 		listOfAngels = new ArrayList<Angel>();
 	}
 	
@@ -21,6 +43,7 @@ public class Legion{
 	*	<b>pre:</b> The list of angels must be initialized.<br>
 	*	<b>post:</b> The angel has been created.<br>
 	*	@param name The angel name.
+	*	@param photo The angel photo.
 	*	@param prayer The angel prayer.
 	*	@param day The angel celebration day.
 	*	@param month The angel celebration month.
@@ -29,12 +52,12 @@ public class Legion{
 	*	@param size The candle size.
 	*	@param essence The candle essence.
 	*	@param illuminance The candle illuminance.
-	*	@throws ListException If the list of angels is of another datatype or hasn't been initialized trhows this exception.<br>
+	*	@throws Exception If the list of angels is of another datatype or hasn't been initialized.<br>
 	*/
 	public void addAngel(String name, String photo, String prayer, int day, String month, 
 	String skill, String color, double size, String essence, double illuminance){
 		listOfAngels.add(index, new Angel(name,photo,prayer,day,month,skill));
-		listOfAngels.get(index).setCandle(color,size,essence,illuminance);
+		listOfAngels.get(index).addCandle(color,size,essence,illuminance);
 		index++;
 		if(index>2) {
 			System.out.println("\n"+"The angel has been created. \n\n");
@@ -47,7 +70,7 @@ public class Legion{
 	*	<b>post:</b> The angel's information has been shown.<br>
 	*	@param index The type of search, name or skill.
 	*	@param search The name or skill to search.
-	*	@throws SearchException If the angel name or angel skill doesn't exist throw this exception.<br>
+	*	@throws Exception If the angel name or angel skill doesn't exist.<br>
 	*	@return The angel's information is show.<br>
 	*/
 	public String searchAngel(int index, String search){
@@ -55,9 +78,9 @@ public class Legion{
 		if(index==1){
 			for(int i=0;i<listOfAngels.size();i++){
 				if(listOfAngels.get(i).getName().equalsIgnoreCase(search)){
-					show = String.format("Name: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
+					show = String.format("Name: %s%n"+"Photo: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
 					"Skill: %s%n"+"Candle %n"+"Color: %s%n"+"Size: %s%n"+"Essence: %s%n"+"Illuminance: %s%n",
-					listOfAngels.get(i).getName(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
+					listOfAngels.get(i).getName(), listOfAngels.get(i).getPhoto(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
 					listOfAngels.get(i).getMonth(), listOfAngels.get(i).getSkill(), listOfAngels.get(i).getCandle().getColor(),
 					listOfAngels.get(i).getCandle().getSize(), listOfAngels.get(i).getCandle().getEssence(), 
 					listOfAngels.get(i).getCandle().getIlluminance());
@@ -66,9 +89,9 @@ public class Legion{
 		}else if(index==2){
 			for(int i=0;i<listOfAngels.size();i++){
 				if(listOfAngels.get(i).getSkill().equalsIgnoreCase(search)){
-					show = String.format("Name: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
+					show = String.format("Name: %s%n"+"Photo: %s%n"+"Prayer: %s%n"+"Day: %d%n"+"Month: %s%n"+
 					"Skill: %s%n"+"Candle %n"+"Color: %s%n"+"Size: %s%n"+"Essence: %s%n"+"Illuminance: %s%n",
-					listOfAngels.get(i).getName(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
+					listOfAngels.get(i).getName(), listOfAngels.get(i).getPhoto(), listOfAngels.get(i).getPrayer(), listOfAngels.get(i).getDay(),
 					listOfAngels.get(i).getMonth(), listOfAngels.get(i).getSkill(), listOfAngels.get(i).getCandle().getColor(),
 					listOfAngels.get(i).getCandle().getSize(), listOfAngels.get(i).getCandle().getEssence(),
 					listOfAngels.get(i).getCandle().getIlluminance());
@@ -83,7 +106,7 @@ public class Legion{
 	*	<b>pre:</b> The list of angels must be initialized and the parameters must be coincide with the reqeriments.<br>
 	*	<b>post:</b> The name is correct or incorrect.<br>
 	*	@param name The name to check.
-	*	@throws NameException If the angel name has an incorrect finish or already exist throw this exception.<br>
+	*	@throws Exception If the angel name has an incorrect finish or already exist.<br>
 	*	@return True if the name is correct or false if the name has an incorrect finish or already exist..<br>
 	*/
 	public boolean checkName(String name){
@@ -109,8 +132,8 @@ public class Legion{
 	*	This method check the skill.<br>
 	*	<b>pre:</b> The list of angels must be initialized.<br>
 	*	<b>post:</b> The skill exist or not.<br>
-	*	@param name The skill to check.
-	*	@throws SkillException If the angel skill already exist throw this exception.<br>
+	*	@param skill The skill to check.
+	*	@throws Exception If the angel skill already exist.<br>
 	*	@return True if the skill already exist or false if the skill is correct.<br>
 	*/
 	public boolean checkSkill(String skill){
@@ -128,19 +151,11 @@ public class Legion{
 	}
 	
 	/**
-	*	This method get the size of the list of angels.<br>
-	*	@return The size of the list of angels.<br>
-	*/
-	public int getSize(){
-		return listOfAngels.size();
-	}
-	
-	/**
 	*	This method show all the celebrations of one month.<br>
 	*	<b>pre:</b> The list of angels must be initialized.<br>
 	*	<b>post:</b> Show simplified information of the angels with the same month.<br>
 	*	@param month The month to show information.
-	*	@throws CelebrationMonthException If in the  month doesn't exist angels throw this exception.<br>
+	*	@throws Exception If in the  month doesn't exist angels.<br>
 	*	@return Text with simplified information of the angels.<br>
 	*/
 	public String showCelebrationsMonth(String month){
@@ -161,7 +176,7 @@ public class Legion{
 	*	This method show all the celebrations in the year.<br>
 	*	<b>pre:</b> The list of angels must be initialized.<br>
 	*	<b>post:</b> Show simplified information of all angels.<br>
-	*	@throws AngelException If doesn't exist any angels throw this exception.<br>
+	*	@throws Exception If doesn't exist any angels.<br>
 	*	@return Text with simplified information of all angels.<br>
 	*/
 	public String showAllCelebrations(){
@@ -173,12 +188,60 @@ public class Legion{
 	}
 	
 	/**
+	*	This method set the skills recognized.<br>
+	*	<b>pre:</b> The skill must be correspond to the requeriments.<br>
+	*	<b>post:</b> The skill has been changed correctly.<br>
+	*	@param skill The skill to evaluate and change.
+	*	@throws Exception If the skill is different of the recognized.<br>
+	*	@return The text of the skill changed.<br>
+	*/
+	public String setSkill(String skill){
+		String setSkill = skill;
+		if(skill.equalsIgnoreCase("1") || skill.equalsIgnoreCase(Angel.PROTECTION)){
+			setSkill = Angel.PROTECTION;
+		}else if(skill.equalsIgnoreCase("2") || skill.equalsIgnoreCase(Angel.HEALTH)){
+			setSkill = Angel.HEALTH;
+		}else if(skill.equalsIgnoreCase("3") || skill.equalsIgnoreCase(Angel.ABUNDANCE)){
+			setSkill = Angel.ABUNDANCE;
+		}else if(skill.equalsIgnoreCase("4") || skill.equalsIgnoreCase(Angel.JUSTICE)){
+			setSkill = Angel.JUSTICE;
+		}else if(skill.equalsIgnoreCase("5") || skill.equalsIgnoreCase(Angel.LOYALTY)){
+			setSkill = Angel.LOYALTY;
+		}
+		return setSkill;
+	}
+	
+	/**
+	*	This method gets the number of created angels.<br>
+	*	@return The size of the list of angels.<br>
+	*/
+	public int createdAngels(){
+		return listOfAngels.size();
+	}
+	
+	/**
+	*	This method gets the type of angel of the legion..<br>
+	*	@return The type of angel of the legion.<br>
+	*/
+	public String getAngelType(){
+		return angelType;
+	}
+	
+	/**
+	*	This method gets the legion name.<br>
+	*	@return The legion name.<br>
+	*/
+	public String getName(){
+		return name;
+	}
+	
+	/**
 	*	This method check if the given day corresponds to the given month.<br>
 	*	<b>pre:</b> The day must be a integer number.<br>
 	*	<b>post:</b> The given day is correct or incorrect for the given month.<br>
 	*	@param month The month.
 	*	@param day The day to evaluate.
-	*	@throws DayException If the day doesn't corresponds to the given month throw this exception.<br>
+	*	@throws Exception If the day doesn't corresponds to the given month.<br>
 	*	@return True if the given day corresponds to the given month or false if is incorrect.<br>
 	*/
 	public static boolean checkDay(String month, int day){
@@ -206,11 +269,11 @@ public class Legion{
 	}
 	
 	/**
-	*	This method check if the given month is correct acording to the calendar.<br>
-	*	<b>pre:</b> The month must be correct acording to the calendar.<br>
+	*	This method check if the given month is correct acording to the gregorian calendar.<br>
+	*	<b>pre:</b> The month must be correct acording to the gregorian calendar.<br>
 	*	<b>post:</b> The given month is correct or incorrect.<br>
 	*	@param month The month to evaluate.
-	*	@throws MonthException If the month doesn't corresponds to the given month throw this exception.<br>
+	*	@throws Exception If the month doesn't corresponds to the given month.<br>
 	*	@return True if the given month corresponds to the months in the calendar or false if the month is incorrect.<br>
 	*/
 	public static boolean checkMonth(String month){
@@ -228,12 +291,12 @@ public class Legion{
 	}
 	
 	/**
-	*	This method change the given text month for other with correct writing.<br>
-	*	<b>pre:</b> The month must be correspond to the requeriments into the method.<br>
+	*	This method change the given text month for other with correct writing acords to the gregorian calendar.<br>
+	*	<b>pre:</b> The month must be correspond to the requeriments.<br>
 	*	<b>post:</b> The given month has been changed to a correct text month.<br>
 	*	@param month The month to change in text.
-	*	@throws MonthException If the month doesn't corresponds to the calendar this exception.<br>
-	*	@return A text of month.<br>
+	*	@throws Exception If the month doesn't corresponds to the gregorian calendar.<br>
+	*	@return A text of month in format of gregorian calendar.<br>
 	*/
 	public static String correctlyMonth(String month){
 		String correctlyMonth = "";

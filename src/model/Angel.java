@@ -1,5 +1,11 @@
 package model;
 
+/**
+*	This class allows create angels.
+*	@author Jhon Ijaji.
+*	@version 1.0
+*	@since 1.0
+*/
 public class Angel{
 	
 	public static final String PROTECTION = "Protection";
@@ -28,6 +34,16 @@ public class Angel{
 	private String skill;
 	private Candle candle;
 	
+	/**
+	*	Angel constructor<br>
+	*	@param name The angel name.
+	*	@param photo The angel photo.
+	*	@param prayer The angel prayer.
+	*	@param day The angel celebration day.
+	*	@param month The angel celebration month.
+	*	@param skill The angel skill.
+	*	@throws IllegalArgumentException In the case of an invalid angel.<br>
+	*/
 	public Angel(String name, String photo,	String prayer, int day, String month, String skill){
 		this.name = name;
 		this.photo = photo;
@@ -38,34 +54,71 @@ public class Angel{
 	}
 	
 	/**
-	*	This method change the attributes of one candle.<br>
+	*	This method add one candle to the angel.<br>
 	*	<b>pre:</b> The candle must be initialized.<br>
 	*	<b>post:</b> The candle attributes have been changed.<br>
 	*	@param color This is tha new candle color.
 	*	@param size This is the new candle size.
 	*	@param essence This is the new candle essence.
 	*	@param illuminance This is the new candle illuminance.
-	*	@throws Exception If the candle does'nt exist throws this exception.<br>
+	*	@throws Exception If the candle doesn't exist.<br>
 	*/
-	public void setCandle(String color, double size, String essence, double illuminance){
+	public void addCandle(String color, double size, String essence, double illuminance){
 		candle = new Candle(color,size,essence,illuminance);
 	}
 	
+	/**
+	*	This method gets the angel name.<br>
+	*	@return The angel name<br>
+	*/
 	public String getName(){
 		return name;
 	}
+	
+	/**
+	*	This method gets the angel photo.<br>
+	*	@return The angel photo.<br>
+	*/
+	public String getPhoto(){
+		return photo;
+	}
+	
+	/**
+	*	This method gets the angel prayer.<br>
+	*	@return The angel prayer.<br>
+	*/
 	public String getPrayer(){
 		return prayer;
 	}
+	
+	/**
+	*	This method gets the angel celebration day.<br>
+	*	@return The angel celebration day.<br>
+	*/
 	public int getDay(){
 		return day;
 	}
+	
+	/**
+	*	This method gets the angel celebration month.<br>
+	*	@return The angel celebration month.<br>
+	*/
 	public String getMonth(){
 		return month;
 	}
+	
+	/**
+	*	This method gets the angel skill.<br>
+	*	@return The angel skill.<br>
+	*/
 	public String getSkill(){
 		return skill;
 	}
+	
+	/**
+	*	This method gets the angel candle.<br>
+	*	@return The angel candle.<br>
+	*/
 	public Candle getCandle(){
 		return candle;
 	}
