@@ -21,26 +21,34 @@ public class Angel{
 	public static final String DECEMBER = "December";
 	
 	private String name;
+	private String photo;
 	private String prayer;
 	private int day;
 	private String month;
 	private String skill;
 	private Candle candle;
 	
-	public Angel(String name, String prayer, int day, String month, String skill){
+	public Angel(String name, String photo,	String prayer, int day, String month, String skill){
 		this.name = name;
+		this.photo = photo;
 		this.prayer = prayer;
 		this.day = day;
 		this.month = month;
 		this.skill = skill;
-		candle = new Candle(null,0,null,0);
 	}
 	
+	/**
+	*	This method change the attributes of one candle.<br>
+	*	<b>pre:</b> The candle must be initialized.<br>
+	*	<b>post:</b> The candle attributes have been changed.<br>
+	*	@param color This is tha new candle color.
+	*	@param size This is the new candle size.
+	*	@param essence This is the new candle essence.
+	*	@param illuminance This is the new candle illuminance.
+	*	@throws Exception If the candle does'nt exist throws this exception.<br>
+	*/
 	public void setCandle(String color, double size, String essence, double illuminance){
-		candle.setColor(color);
-		candle.setSize(size);
-		candle.setEssence(essence);
-		candle.setIlluminance(illuminance);
+		candle = new Candle(color,size,essence,illuminance);
 	}
 	
 	public String getName(){

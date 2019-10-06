@@ -10,15 +10,13 @@ public class Main{
 	private Legion legion;
 	
 	public Main(){
-	    readerLine = new Scanner(System.in);
-	    readerNum = new Scanner(System.in);
 	    reader = new Scanner(System.in);
 	}
 	
 	public void init(){
 		legion = new Legion(Legion.TOP,0);
-	    legion.addAngel("Saitamael","Ooneee Puuunch",8,"October","One Punch","Red",99,"Mint",999);
-        legion.addAngel("Anuel","Bebecitaaa",10,"July","Real until the dead","@@@",1,"@@@",3);	    
+	    legion.addAngel("Saitamael","c:","Ooneee Puuunch",8,"October","One Punch","Red",99,"Mint",999);
+        legion.addAngel("Anuel","c:","Bebecitaaa",10,"July","Real until the dead","@@@",1,"@@@",3);	    
 	}
 	
 	public static void main(String[] args){
@@ -28,7 +26,7 @@ public class Main{
 		int supp;
 		do{
 			main.menu();
-			int menu = main.readerNum.nextInt();
+			int menu = main.reader.nextInt();
 			if(menu==1){
 				boolean endCreate = false;
 				do{
@@ -41,45 +39,50 @@ public class Main{
 					String month = "";
 					String skill = "";
 					int day;
+					main.reader.nextLine();
 					do{
 						System.out.println("Name:");
-						name = main.readerLine.nextLine();
+						name = main.reader.nextLine();
 						if(main.legion.checkName(name)==true) {
 							checkName = true;
 						}
 					}while(checkName==false);
-					System.out.println("\n"+"Prayer:");
-					String prayer = main.readerLine.nextLine();
+					System.out.println("Photo:");
+					String photo = main.reader.nextLine();
+					System.out.println("Prayer:");
+					String prayer = main.reader.nextLine();
 					do{
-						System.out.println("\n"+"Celebration Month:");
+						System.out.println("Celebration Month:");
 						month = main.reader.next();
 						checkMonth = Legion.checkMonth(month);
 					}while(checkMonth==false);
 					do{
-						System.out.println("\n"+"Celebration Day:");
-						day = main.readerNum.nextInt();
+						System.out.println("Celebration Day:");
+						day = main.reader.nextInt();
 						checkDay = Legion.checkDay(Legion.correctlyMonth(month),day);
 					}while(checkDay==false);
+					main.reader.nextLine();
 					do{
-						System.out.println("\n"+"Skill: ");
-						skill = main.readerLine.nextLine();
+						System.out.println("Skill: ");
+						skill = main.reader.nextLine();
 						checkSkill = main.legion.checkSkill(skill);
 					}while(checkSkill==true);
-					System.out.println("\n"+"Input the Attributes of the Candle \n"+"Color:");
-					String color = main.readerLine.nextLine();
-					System.out.println("Size:");
-					double size = main.readerNum.nextDouble();
-					System.out.println("\n"+"Essence:");
-					String essence = main.readerLine.nextLine();
-					System.out.println("\n"+"Illuminance:");
-					double illuminance = main.readerNum.nextDouble();
-					main.legion.addAngel(name, prayer, day, Legion.correctlyMonth(month), skill, color, size, essence, illuminance);
+					System.out.println("\n"+"Input the Attributes of the Candle > \n"+"<>Color:");
+					String color = main.reader.nextLine();
+					System.out.println("<>Size:");
+					double size = main.reader.nextDouble();
+					System.out.println("<>Essence:");
+					main.reader.nextLine();
+					String essence = main.reader.nextLine();
+					System.out.println("<>Illuminance:");
+					double illuminance = main.reader.nextDouble();
+					main.legion.addAngel(name, photo, prayer, day, Legion.correctlyMonth(month), skill, color, size, essence, illuminance);
 					System.out.println("<1>.Continue or <2>.Return to the Menu? \n");
-					supp = main.readerNum.nextInt();
+					supp = main.reader.nextInt();
 					if(supp==2) {
 						endCreate = true;
 					}else if(supp!=1){
-						System.out.println("\n"+"Invalid function. Please write the correct number of the function. \n");
+						System.out.println("\n"+"Invalid function. Please write the correct number of the function.");
 					}
 				}while(endCreate==false);
 			}else if(menu==2){
@@ -88,33 +91,35 @@ public class Main{
 					String searchName = "";
 					String searchSkill = "";
 					System.out.println("\n"+"Search: \n"+"<1>.Name \n"+"<2>.Skill \n");
-					int search = main.readerNum.nextInt();
+					int search = main.reader.nextInt();
 					if(search==1){	
 						System.out.println("\n"+"Name:");
-						searchName = main.readerLine.nextLine();
-						if(main.legion.searchAngel(1,searchName).equalsIgnoreCase("Don't exist.")){
-							System.out.println("\n"+"Don't exist."+"\n");
+						main.reader.nextLine();
+						searchName = main.reader.nextLine();
+						if(main.legion.searchAngel(1,searchName).equalsIgnoreCase("Doesn't exist.")){
+							System.out.println("\n"+"Doesnn't exist."+"\n");
 						}else{
 							System.out.println("\n"+main.legion.searchAngel(1,searchName));
 						}
 					}else if(search==2){
 						System.out.println("\n"+"Skill:");
-						searchSkill = main.readerLine.nextLine();
-						if(main.legion.searchAngel(2,searchSkill).equalsIgnoreCase("Don't exist.")){
-							System.out.println("\n"+"Don't exist."+"\n");							
+						main.reader.nextLine();
+						searchSkill = main.reader.nextLine();
+						if(main.legion.searchAngel(2,searchSkill).equalsIgnoreCase("Doesn't exist.")){
+							System.out.println("\n"+"Doesn't exist."+"\n");							
 						}else{
 							System.out.println("\n"+main.legion.searchAngel(2,searchSkill));
 						}
 					}else{
-						System.out.println("\n"+"Invalid function. Please write the correct number of the function. \n");
+						System.out.println("\n"+"Invalid function. Please write the correct number of the function.");
 					}
 					if(search==1 || search==2){
 						System.out.println("<1>.Continue or <2>.Return to the Menu? \n");
-						supp = main.readerNum.nextInt();
+						supp = main.reader.nextInt();
 						if(supp==2) {
 							endSearch = true;
 						}else if(supp!=1){
-							System.out.println("\n"+"Invalid function. Please write the correct number of the function. \n");
+							System.out.println("\n"+"Invalid function. Please write the correct number of the function.");
 						}
 					}	
 				}while(endSearch==false);
@@ -128,13 +133,13 @@ public class Main{
 						oneMonth = main.reader.next();
 						checkOneMonth = Legion.checkMonth(oneMonth);
 					}while(checkOneMonth==false);
-					System.out.println("\n"+main.legion.showCelebrationsInOneMonth(Legion.correctlyMonth(oneMonth)));
+					System.out.println("\n"+main.legion.showCelebrationsMonth(Legion.correctlyMonth(oneMonth)));
 					System.out.println("<1>.Continue or <2>.Return to the Menu? \n");
-					supp = main.readerNum.nextInt();
+					supp = main.reader.nextInt();
 					if(supp==2) {
 						endSearchMonth = true;
 					}else if(supp!=1){
-						System.out.println("\n"+"Invalid function. Please write the correct number of the function. \n");
+						System.out.println("\n"+"Invalid function. Please write the correct number of the function.");
 					}
 				}while(endSearchMonth==false);
 			}else if(menu==4){
